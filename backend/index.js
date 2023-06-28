@@ -38,7 +38,7 @@ const userModel = mongoose.model("user" ,userSchema)
 app.get("/",(req,res)=>{
     res.send("Server is running")
 })
-app.post("/signup",(req,res)=>{
+app.post("/signup",async(req,res)=>{
     console.log(req.body)
     const {email} = req.body
 

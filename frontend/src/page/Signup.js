@@ -4,6 +4,7 @@ import {BiShow , BiHide} from "react-icons/bi"
 import { Link, useNavigate } from 'react-router-dom';
 import { BsEmojiSmileUpsideDown } from 'react-icons/bs';
 import { ImagetoBase64 } from '../utility/imagetoBase64';
+import { toast } from 'react-hot-toast';
 
 function Signup() {
     const navigate = useNavigate()
@@ -61,11 +62,12 @@ function Signup() {
 
           const dataRes = await fetchData.json()
           console.log(dataRes)
-          alert(dataRes.message);
-          navigate("/login");
+         // alert(dataRes.message);
+          toast(dataRes.message)
+         // navigate("/login");
         }
         else{
-          alert("password and confirm passwrod does not match")
+          alert("password and confirm password does not match")
         }
       }
       else{
