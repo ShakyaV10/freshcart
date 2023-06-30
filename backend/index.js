@@ -4,7 +4,9 @@ const mongoose = require("mongoose")
 const dotenv = require("dotenv").config()
 
 const app = express()
-app.use(cors())
+app.use(cors({
+    origin: "http://localhost:8080"
+  }));
 app.use(express.json({limit : "10mb"}))
 
 const PORT = process.env.PORT || 8080
@@ -38,23 +40,55 @@ const userModel = mongoose.model("user" ,userSchema)
 app.get("/",(req,res)=>{
     res.send("Server is running")
 })
+
+//Sign Up
 app.post("/signup",async(req,res)=>{
     console.log(req.body)
     const {email} = req.body
-
-    userModel.findOne({email : email} , (err , result)=>{
-    console.log(result)
-    console.log(err)
-    if(result){
-        res.send({message : "Email id is already registered"})
-    }
-    else {
-        const data = userModel(req.body)
-        const save = data.save()
-        res.send({message : "Successfully sign up" })
+    
+    try {
+        const result = await userModel.findOne({email : email});
+        console.log(result);
+        if(result) {
+            res.send({message : "Email id is already registered", alert: false})
+        }
+        else{
+            const data = userModel(req.body)
+            const save = data.save()
+            res.send({message : "Successfully sign up", alert: true })
+        }
+    } 
+    catch(error){
+        console.log(error);
     }
 })
+
+//Login
+app.post("/login",async(req,res)=>{
+    console.log(req.body)
+    const {email} = req.body
+    try {
+        const result = await userModel.findOne({email : email});
+        if(result) {
+            const dataSend = {
+                _id: result._id,
+                firstName: result.firstName,
+                lastName: result.lastName,
+                email: result.email,
+                image: result.image,
+            };
+            console.log(dataSend)
+            res.send({message : "Login is successfull", alert: true, data : dataSend})
+        }
+        else{
+            res.send({message : "Email is not awailable, please sign up", alert: false})
+
+        }
+    } 
+    catch(error){
+        console.log(error);
+    }
 })
 
-
+//Server is Running
 app.listen(PORT,()=>console.log("server is running at port : " + PORT))

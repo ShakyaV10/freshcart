@@ -1,23 +1,30 @@
 import React, { useState } from 'react'
 import loginSignupImage from "../assest/login-animation.gif"
 import {BiShow , BiHide} from "react-icons/bi"
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { BsEmojiSmileUpsideDown } from 'react-icons/bs';
+import { toast } from "react-hot-toast";
+import { useDispatch, useSelector } from 'react-redux';
+import { loginRedux } from '../redux/userSlice';
 
 const Login = () => {
 
   const [showPassword , setshowPassword] = useState(false);
   const [data, setdata] = useState({
-    firstName : "",
-    lastName : "",
     email : "",
     password : "",
-    confirmPassword : "",
   });
-  console.log(data)
+  const navigate = useNavigate()
+
+  const userData = useSelector(state => state)
+
+  const dispatch = useDispatch()
+
+
+
   const handleshowPassword = () =>{
-    setshowPassword(preve => !preve)
-  }
+    setshowPassword((preve) => !preve)
+  };
   const handleOnChange = (e) =>{
     const {name,value} = e.target
     setdata((preve) => {
@@ -28,11 +35,30 @@ const Login = () => {
     })
   }
 
-  const handleSubmit = (e) =>{
+  const handleSubmit = async(e) =>{
     e.preventDefault()
     const {email,password} = data
     if(email && password){
-      alert("successfull")
+      const fetchData = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/login`,{
+          method : "POST",
+          headers : {
+            "content-type" : "application/json"
+          },
+          body : JSON.stringify(data)
+        })
+
+        const dataRes = await fetchData.json()
+        console.log(dataRes)
+        toast(dataRes.message)
+
+        if(dataRes.alert){
+          dispatch(loginRedux(dataRes))
+          setTimeout(() => {
+            navigate("/")
+          }, 1000)
+        }
+
+        console.log(userData)
     }
     else{
       alert("Please Enter required fields")
