@@ -64,7 +64,9 @@ function Signup() {
           console.log(dataRes)
          // alert(dataRes.message);
           toast(dataRes.message)
-         // navigate("/login");
+          if(dataRes.alert){
+            navigate("/login");
+          }
         }
         else{
           alert("password and confirm password does not match")

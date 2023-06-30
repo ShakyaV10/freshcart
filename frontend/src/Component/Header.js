@@ -3,9 +3,13 @@ import logo from "../assest/logo.png"
 import { Link } from 'react-router-dom'
 import {HiOutlineUserCircle} from 'react-icons/hi'
 import {BsCartFill} from 'react-icons/bs'
+import { useSelector } from 'react-redux'
 
 const Header = () => {
     const [showMenu,setShowMenu] = useState(false);
+    const userData = useSelector((state) =>state.user)
+    console.log(userData)
+
     const handleShowMenu = ()=>{
       setShowMenu(preve => !preve)
     }
