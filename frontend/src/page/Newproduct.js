@@ -87,7 +87,8 @@ const Newproduct = () => {
           <option value={"icecream"}>IceCream</option>
           <option value={"dosa"}>Dosa</option>
           <option value={"pizza"}>Pizza</option>
-          <option value={"rice"}>rice</option>
+          <option value={"rice"}>Rice</option>
+          <option value={"cake"}>Cake</option>
         </select>
 
         <label htmlFor='image' className='my-1'>Image
