@@ -93,7 +93,7 @@ const Newproduct = () => {
         <label htmlFor='image' className='my-1'>Image
           <div className='h-40 w-full bg-slate-200 rounded flex items-center justify-center cursor-pointer'>
             {
-              data.image ? <img src={data.image} className='h-full' /> :<span className='text-5xl'><BsCloudUpload/></span>
+              data.image ? <img src={data.image} alt='' className='h-full' /> :<span className='text-5xl'><BsCloudUpload/></span>
             }
              
             
