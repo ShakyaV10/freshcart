@@ -89,6 +89,11 @@ const Newproduct = () => {
           <option value={"pizza"}>Pizza</option>
           <option value={"rice"}>Rice</option>
           <option value={"cake"}>Cake</option>
+          <option value={"chicken"}>Chicken</option>
+          <option value={"burger"}>Burger</option>
+          <option value={"sandwich"}>Sandwich</option>
+          <option value={"noodles"}>Noodles</option>
+          <option value={"paneer"}>Paneer</option>
         </select>
 
         <label htmlFor='image' className='my-1'>Image
