@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 const Home = () => {
   const productData = useSelector((state)=>state.product.productList)
   console.log(productData)
-  const homeProductCardList = productData.slice(1,5)
+  const homeProductCardList = productData.slice(14,19)
   return (
     <div className='p-2 md:p-4'>
       <div className="md:flex gap-4 py-2">
