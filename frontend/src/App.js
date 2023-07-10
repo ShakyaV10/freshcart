@@ -4,17 +4,20 @@ import Header from './Component/Header';
 import { Outlet } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 import { useEffect } from "react";
+import {setDataProduct} from "./redux/productSlide";
+import { useDispatch } from 'react-redux';
 
 function App() {
+  const dispatch = useDispatch()
   useEffect(()=>{
     (async()=>{
       const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/product`)
       const resData = await res.json()
       console.log(resData)
+      dispatch(setDataProduct(resData))
     })()
   },[])
   return (
-
     <>
     <Toaster />
      <div> 
