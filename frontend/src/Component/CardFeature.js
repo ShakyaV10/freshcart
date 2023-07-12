@@ -2,7 +2,7 @@ import React from "react";
 
 const CardFeature = ({ image, name, price, category, loading }) => {
     return (
-        <div className="w-full min-w-[200px] bg-white hover:shadow-lg drop-shadow-lg pt-5 px-4 cursor-pointer flex flex-col">
+        <div className="w-full min-w-[200px] max-w-[200px] bg-white hover:shadow-lg drop-shadow-lg py-5 px-4 cursor-pointer flex flex-col">
             {
                 image ? <>
                 <div className="h-28 flex flex-col justify-center items-center">
@@ -18,7 +18,7 @@ const CardFeature = ({ image, name, price, category, loading }) => {
                 <span className="text-green-500">₹</span>
                 <span>{price}</span>
             </p>
-            <button className="bg-yellow-500 py-1 mt-2 rounded">Add to Cart</button>
+            <button className="bg-yellow-400 py-1 mt-2 rounded">Add to Cart</button>
                 </>
 
                 :

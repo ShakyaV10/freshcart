@@ -28,6 +28,26 @@ const Home = () => {
 
   const categoryList = [...new Set(productData.map(el=>el.category))]
   console.log(categoryList)
+
+
+  //filter data display
+  const [filterby,setFilterBy] = useState("")
+  const [dataFilter,setDataFilter] = useState([])
+
+  useEffect(()=>{
+    setDataFilter(productData)
+  },[productData])
+
+
+  const handleFilterProduct = (category)=>{
+    const filter = productData.filter(el => el.category.toLowerCase() === category.toLowerCase())
+    setDataFilter(()=>{
+      return[
+        ...filter
+      ]
+    })
+  }
+
   return (
     <div className='p-2 md:p-4'>
       <div className="md:flex gap-4 py-2">
@@ -105,11 +125,27 @@ const Home = () => {
           {
             categoryList[0] && categoryList.map(el =>{
               return(
-                <FilterProduct category={el}/>
+                <FilterProduct category={el} onClick={()=>handleFilterProduct(el)}/>
               )
             })
           }
           
+        </div>
+
+        <div className="flex flex-wrap justify-center gap-4 my-4">
+            {
+              dataFilter.map(el => {
+                return(
+                  <CardFeature
+                    key={el._id}
+                    image={el.image}
+                    name={el.name}
+                    category={el.category}
+                    price={el.price}
+                  />
+                )
+              })
+            }
         </div>
       </div>  
     </div>
