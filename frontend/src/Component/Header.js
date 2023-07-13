@@ -36,7 +36,7 @@ console.log(process.env.REACT_APP_ADMIN_EMAIL )
             <div className='flex items-center gap-4 md:gap-7'>
               <nav className='gap-4 md:gap-6 text-base md:text-lg hidden md:flex'>
                 <Link to={""}>Home</Link>
-                <Link to={"menu"}>Menu</Link>
+                <Link to={"menu/64a2bb5b0078ad781e6511e8"}>Menu</Link>
                 <Link to={"about"}>About</Link>
                 <Link to={"contact"}>Contact</Link>
               </nav>
@@ -61,7 +61,7 @@ console.log(process.env.REACT_APP_ADMIN_EMAIL )
                     }
                     <nav className='text-base md:text-lg flex flex-col md:hidden'>
                       <Link to={""} className='px-2 py-1'>Home</Link>
-                      <Link to={"menu"} className='px-2 py-1'>Menu</Link>
+                      <Link to={"menu/64a2bb5b0078ad781e6511e8"} className='px-2 py-1'>Menu</Link>
                       <Link to={"about"} className='px-2 py-1'>About</Link>
                       <Link to={"contact"} className='px-2 py-1'>Contact</Link>
                     </nav>
