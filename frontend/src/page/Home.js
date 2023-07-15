@@ -9,10 +9,8 @@ import AllProduct from "../Component/AllProduct";
 
 const Home = () => {
   const productData = useSelector((state)=>state.product.productList);
-  console.log(productData);
   const homeProductCardList = productData.slice(14,19);
   const homeProductCartListVegetables = productData.filter(el => el.category === "vegetable",[])
-  console.log(homeProductCartListVegetables)
 
   const loadingArray = new Array(4).fill(null)
   const loadingArrayFeature = new Array(10).fill(null)

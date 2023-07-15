@@ -10,20 +10,27 @@ export const productSlice = createSlice({
     initialState,
     reducers : {
         setDataProduct : (state,action)=>{
-                console.log(action)
                 state.productList = [...action.payload]
         },
         addCartItem : (state,action)=>{
             console.log(action)
+            const total = action.payload.price
+            state.cartItem = [...state.cartItem,{...action.payload,qty : 1,total : total}]
 
         },
         deleteCartItem : (state,action)=>{
+            console.log(action.payload)
+        },
+        increaseQty : (state,action)=>{
+
+        },
+        decreaseQty : (state,action)=>{
 
         }
     }
 })
 
-export const {setDataProduct, addCartItem, deleteCartItem} = productSlice.actions
+export const {setDataProduct, addCartItem, deleteCartItem, increaseQty, decreaseQty} = productSlice.actions
 
 export default productSlice.reducer
 
