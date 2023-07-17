@@ -43,19 +43,19 @@ app.get("/",(req,res)=>{
 
 //Sign Up
 app.post("/signup",async(req,res)=>{
-    console.log(req.body)
+    //console.log(req.body)
     const {email} = req.body
     
     try {
         const result = await userModel.findOne({email : email});
-        console.log(result);
+        //console.log(result);
         if(result) {
             res.send({message : "Email id is already registered", alert: false})
         }
         else{
             const data = userModel(req.body)
             const save = data.save()
-            res.send({message : "Successfully sign up", alert: true })
+            res.send({message : "Signed up successfully", alert: true })
         }
     } 
     catch(error){
@@ -65,7 +65,7 @@ app.post("/signup",async(req,res)=>{
 
 //Login
 app.post("/login",async(req,res)=>{
-    console.log(req.body)
+    //console.log(req.body)
     const {email} = req.body
     try {
         const result = await userModel.findOne({email : email});
@@ -78,10 +78,10 @@ app.post("/login",async(req,res)=>{
                 image: result.image,
             };
             console.log(dataSend)
-            res.send({message : "Login is successfull", alert: true, data : dataSend})
+            res.send({message : "Logged in successfully", alert: true, data : dataSend})
         }
         else{
-            res.send({message : "Email is not awailable, please sign up", alert: false})
+            res.send({message : "Email is not registered, please sign up", alert: false})
 
         }
     } 
@@ -108,16 +108,23 @@ const productModel = mongoose.model("product",schemaProduct)
 // save product in data
 //api
 app.post("/uploadProduct" ,async(req , res)=>{
-    console.log(req.body)
+    //console.log(req.body)
     const data = await productModel(req.body)
     const datasave = await data.save()
-    res.send({message : "upload successfully"})
+    res.send({message : "uploaded successfully"})
 })
 
 //
 app.get("/product",async(req,res)=>{
     const data = await productModel.find({})
     res.send(JSON.stringify(data))
+})
+
+/* Payment Gateway */
+app.post("/checkout-payment",async(req,res)=>{
+    console.log(req.body)
+
+    res.send({message : "payment gateway" , success : true})
 })
 
 //Server is Running

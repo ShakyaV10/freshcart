@@ -9,6 +9,20 @@ const Cart = () => {
 
     const totalPrice = productCartItem.reduce((acc,curr)=> acc + parseInt(curr.total),0)
     const totalQty = productCartItem.reduce((acc,curr)=> acc + parseInt(curr.qty),0)
+
+    const handlePayment = async()=>{
+        const res = await fetch (`${process.env.REACT_APP_SERVER_DOMAIN}/checkout-payment`,{
+            method : "POST",
+            headers : {
+                "content-type" : "application/json"
+            },
+            body : JSON.stringify(productCartItem)
+        })
+
+        const data = await res.json()
+        console.log(data)
+    }
+
   return (
     <>
         <div className='p-2 md:p-4'>
@@ -46,7 +60,7 @@ const Cart = () => {
                         <p>Total Price</p>
                         <p className='ml-auto w-32 font-bold'><span className="text-green-500">₹</span>{totalPrice}</p>
                     </div>
-                    <button className='bg-red-500 w-full text-lg font-bold py-2 text-white'>Payment</button>
+                    <button className='bg-red-500 w-full text-lg font-bold py-2 text-white' onClick={handlePayment}>Payment</button>
                 </div>
             </div>
             :
