@@ -1,7 +1,9 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
-import CartProduct from '../Component/cartProduct'
-import emptyCartImage from '../assest/empty.gif'
+import React from 'react';
+import { useSelector } from 'react-redux';
+import CartProduct from '../Component/cartProduct';
+import emptyCartImage from '../assest/empty.gif';
+import { toast } from 'react-hot-toast';
+import {  loadStripe } from "@stripe/stripe-js";
 
 const Cart = () => {
     const productCartItem = useSelector((state)=>state.product.cartItem)
@@ -11,6 +13,7 @@ const Cart = () => {
     const totalQty = productCartItem.reduce((acc,curr)=> acc + parseInt(curr.qty),0)
 
     const handlePayment = async()=>{
+        const stripePromise = await loadStripe(`${process.env.REACT_APP_STRIPE_PUBLIC_KEY}`)
         const res = await fetch (`${process.env.REACT_APP_SERVER_DOMAIN}/checkout-payment`,{
             method : "POST",
             headers : {
@@ -18,9 +21,13 @@ const Cart = () => {
             },
             body : JSON.stringify(productCartItem)
         })
+        if(res.statusCode === 500) return;
 
         const data = await res.json()
         console.log(data)
+
+        toast("Redirect to Payment Gateway...!")
+        stripePromise.redirectToCheckout({sessionId : data})
     }
 
   return (
