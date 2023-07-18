@@ -18,7 +18,7 @@ function Signup() {
       confirmPassword : "",
       image : "",
     });
-    console.log(data)
+    
     const handleshowPassword = () =>{
       setshowPassword(preve => !preve)
     }
@@ -37,7 +37,7 @@ function Signup() {
 
     const handleUploadProfileImage = async(e)=> {
       const data = await ImagetoBase64(e.target.files[0])
-      console.log(data)
+    
 
       setdata((preve)=>{
         return{
@@ -61,7 +61,7 @@ function Signup() {
           })
 
           const dataRes = await fetchData.json()
-          console.log(dataRes)
+         
          // alert(dataRes.message);
           toast(dataRes.message)
           if(dataRes.alert){
