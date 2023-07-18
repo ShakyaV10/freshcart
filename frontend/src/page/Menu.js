@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import AllProduct from '../Component/AllProduct'
 import { addCartItem } from '../redux/productSlide'
+import loading from '../assest/Loading.gif'
 
 const Menu = () => {
   const {filterby} = useParams()
@@ -10,7 +11,18 @@ const Menu = () => {
   const dispatch = useDispatch()
   const productData = useSelector(state => state.product.productList)
   
+  const loadingStyle = {
+    width: '100px',
+    height: '100px',
+  };
+
   const productDisplay = productData.filter(el => el._id === filterby)[0]
+  if (!productDisplay) {
+    return <div className='flex justify-center items-center mt-40 flex-col'>
+        <img src={loading} alt='' style={loadingStyle}/>
+        <p className='text-5xl font-bold'>Loading</p>
+    </div>;
+  }
   console.log(productDisplay)
 
   const handleAddCartProduct = (e)=>{

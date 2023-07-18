@@ -35,11 +35,11 @@ const Home = () => {
       <div className="md:flex gap-4 py-2">
 
        <div className="md:w-1/2 ">
-        <div className="flex gap-3 bg-slate-300 w-36 px-2 items-center rounded-full">
+        {/* <div className="flex gap-3 bg-slate-300 w-36 px-2 items-center rounded-full">
           <p className="text-sm font-medium text-slate-900">Fast Delivery</p>
           <img src="https://cdn-icons-png.flaticon.com/512/2972/2972185.png" alt="" className="h-7"/>
-        </div>
-        <h2 className="text-4xl md:text-7xl font-bold py-3">Fastest Delivery by <span className="text-green-600 text-">Fresh Cart</span></h2>
+        </div> */}
+        <h2 className="text-green-600 text-4xl md:text-7xl font-bold py-3">FreshCart<br></br><span className="text-black text-5xl">Freshness at your Doortep</span></h2>
         <p className="py-3 text-base">Fresh Cart is an online e-commerce site specializing in grocery and food items, offering a convenient and hassle-free shopping experience. With a wide selection of fresh produce, pantry staples, and gourmet treats, customers can easily browse and order their favorite products from the comfort of their homes. The platform ensures the highest quality and freshness of its products, partnering with trusted local suppliers and adhering to strict quality control measures. </p>
         <button className="font-bold bg-green-500 text-slate-100 px-4 py-2 rounded">Order Now</button>
       </div>
