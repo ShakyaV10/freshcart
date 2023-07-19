@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import loginSignupImage from "../assest/login-animation.gif"
 import {BiShow , BiHide} from "react-icons/bi"
 import { Link, useNavigate } from 'react-router-dom';
-import { BsEmojiSmileUpsideDown } from 'react-icons/bs';
 import { ImagetoBase64 } from '../utility/imagetoBase64';
 import { toast } from 'react-hot-toast';
 
@@ -47,53 +46,61 @@ function Signup() {
       })
     }
  console.log(process.env.REACT_APP_SERVER_DOMAIN)
-    const handleSubmit = async(e) =>{
-      e.preventDefault()
-      const {firstName,email,password,confirmPassword} = data
-      if(firstName && email && password && confirmPassword){
-        if(password === confirmPassword){
-          const fetchData = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/signup`,{
-            method : "POST",
-            headers : {
-              "content-type" : "application/json"
-            },
-            body : JSON.stringify(data)
-          })
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      const { firstName, email, password, image, confirmPassword } = data;
 
-          const dataRes = await fetchData.json()
-         
-         // alert(dataRes.message);
-          toast(dataRes.message)
-          if(dataRes.alert){
-            navigate("/login");
+      if (firstName && email && password && image && confirmPassword) {
+        if (password === confirmPassword) {
+          const formData = {
+            firstName: firstName,
+            email: email,
+            password: password,
+            image: image,
+          };
+
+          try {
+            const fetchData = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/signup`, {
+              method: "POST",
+              headers: {
+                "content-type": "application/json",
+              },
+              body: JSON.stringify(formData),
+            });
+
+            const dataRes = await fetchData.json();
+
+            toast(dataRes.message);
+            if (dataRes.alert) {
+              navigate("/login");
+            }
+          } catch (error) {
+            console.log(error);
           }
+        } else {
+          alert("Password and confirm password do not match");
         }
-        else{
-          alert("password and confirm password does not match")
-        }
+      } else {
+        alert("Please enter required fields");
       }
-      else{
-        alert("Please Enter required fields")
-      }
-    }
+    };
 
   return (
     <div className='p-3 md:p-4'>
         <div className='w-full max-w-sm bg-white m-auto flex flex-col p-4'>
-          { /* <h1 className='text-center text-2xl font-bold '>Sign up</h1> */}
           <div className='w-20 h-20 overflow-hidden rounded-full drop-shadow-md shadow-md m-auto relative'>
             <img src={data.image? data.image :loginSignupImage} className='w-full h-full' alt=''/>
 
             <label htmlFor='profileImage'>
               <div className='absolute bottom-0 h-1/3 bg-slate-500 bg-opacity-50 w-full text-center cursor-pointer'>
-                <p className='text-sm p-1 text-white'>Upload</p>
+                <p className='text-sm p-1 text-white'>Upload<span className='text-red-500'>*</span></p>
               </div>
               <input type={"file"} id='profileImage' accept='image/*' className='hidden' onChange={handleUploadProfileImage} />
             </label>
           </div>
 
           <form className='w-full py-3 flex flex-col' onSubmit={handleSubmit}>
-            <label htmlFor='firstName'>First Name</label>
+            <label htmlFor='firstName'>First Name<span className='text-red-500'>*</span></label>
             <input 
               type={"text"} 
               id='firstName' 
@@ -111,7 +118,7 @@ function Signup() {
               value={data.lastName}
               onChange={handleOnChange} />
 
-            <label htmlFor='email'>Email</label>
+            <label htmlFor='email'>Email<span className='text-red-500'>*</span></label>
             <input 
               type={"email"} 
               id="email" 
@@ -120,7 +127,7 @@ function Signup() {
               value={data.email}
               onChange={handleOnChange} />
 
-            <label htmlFor='password'>Password</label>
+            <label htmlFor='password'>Password<span className='text-red-500'>*</span></label>
             <div className='flex px-2 py-1 bg-slate-200 rounded mt-1 mb-2 focus-within:outline focus-within:outline-blue-300'>
               <input 
                 type={ showPassword? "text" : "password"} 
@@ -134,7 +141,7 @@ function Signup() {
               </span>
             </div>
 
-            <label htmlFor='confirmpassword'>Confirm Password</label>
+            <label htmlFor='confirmpassword'>Confirm Password<span className='text-red-500'>*</span></label>
             <div className='flex px-2 py-1 bg-slate-200 rounded mt-1 mb-2 focus-within:outline focus-within:outline-blue-300'>
               <input 
                 type={ showConfirmPassword? "text" : "password"} 

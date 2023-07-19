@@ -3,6 +3,7 @@ const cors = require("cors")
 const mongoose = require("mongoose")
 const dotenv = require("dotenv").config()
 const Stripe = require("stripe")
+const bcrypt = require('bcrypt');
 
 const app = express()
 app.use(cors({
@@ -43,53 +44,66 @@ app.get("/",(req,res)=>{
 })
 
 //Sign Up
-app.post("/signup",async(req,res)=>{
-    //console.log(req.body)
-    const {email} = req.body
-    
+app.post("/signup", async (req, res) => {
+    const { firstName, lastName, email, password, image } = req.body;
+  
     try {
-        const result = await userModel.findOne({email : email});
-        //console.log(result);
-        if(result) {
-            res.send({message : "Email id is already registered", alert: false})
-        }
-        else{
-            const data = userModel(req.body)
-            const save = data.save()
-            res.send({message : "Signed up successfully", alert: true })
-        }
-    } 
-    catch(error){
-        console.log(error);
+      const result = await userModel.findOne({ email: email });
+  
+      if (result) {
+        res.send({ message: "Email id is already registered", alert: false });
+      } else {
+        // Hash the password using bcrypt
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+  
+        // Create a new user with the hashed password and other data
+        const newUser = new userModel({
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          password: hashedPassword,
+          image: image,
+        });
+  
+        // Save the new user to the database
+        const savedUser = await newUser.save();
+  
+        res.send({ message: "Signed up successfully", alert: true });
+      }
+    } catch (error) {
+      console.log(error);
     }
-})
+  });
 
 //Login
-app.post("/login",async(req,res)=>{
-    //console.log(req.body)
-    const {email} = req.body
+app.post("/login", async (req, res) => {
+    const { email, password } = req.body;
     try {
-        const result = await userModel.findOne({email : email});
-        if(result) {
-            const dataSend = {
-                _id: result._id,
-                firstName: result.firstName,
-                lastName: result.lastName,
-                email: result.email,
-                image: result.image,
-            };
-            console.log(dataSend)
-            res.send({message : "Logged in successfully", alert: true, data : dataSend})
+      const user = await userModel.findOne({ email: email });
+  
+      if (user) {
+        const passwordMatch = await bcrypt.compare(password, user.password);
+  
+        if (passwordMatch) {
+          const dataSend = {
+            _id: user._id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            image: user.image,
+          };
+          res.send({ message: "Logged in successfully", alert: true, data: dataSend });
+        } else {
+          res.send({ message: "Invalid email or password", alert: false });
         }
-        else{
-            res.send({message : "Email is not registered, please sign up", alert: false})
-
-        }
-    } 
-    catch(error){
-        console.log(error);
+      } else {
+        res.send({ message: "Invalid email or password", alert: false });
+      }
+    } catch (error) {
+      console.log(error);
     }
-})
+  });
 
 
 // product section
@@ -109,7 +123,6 @@ const productModel = mongoose.model("product",schemaProduct)
 // save product in data
 //api
 app.post("/uploadProduct" ,async(req , res)=>{
-    //console.log(req.body)
     const data = await productModel(req.body)
     const datasave = await data.save()
     res.send({message : "uploaded successfully"})
@@ -122,7 +135,6 @@ app.get("/product",async(req,res)=>{
 })
 
 /* Payment Gateway */
-//console.log(process.env.STRIPE_SECRET_KEY)
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
