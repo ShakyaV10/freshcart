@@ -71,7 +71,7 @@ const Home = () => {
 
       <div className=''>
           <div className='flex w-full items-center'>
-            <h2 className="font-bold text-2xl text-slate-800 mb-4">Fresh Vegetables</h2>
+            <h2 className="font-bold text-2xl text-slate-800 mb-4">Farm-fresh produce, straight to your kitchen</h2>
             <div className='ml-auto flex gap-3'>
               <button onClick={prevProduct} className='bg-slate-300 hover:bg-slate-400 text-lg p-1 rounded'><GrPrevious/></button>
               <button onClick={nextProduct} className='bg-slate-300 hover:bg-slate-400 text-lg p-1 rounded'><GrNext/></button>
@@ -98,7 +98,7 @@ const Home = () => {
           </div>
         </div>
 
-        <AllProduct heading={"Your Product"}/>
+        <AllProduct heading={"Shop smart, skip the lines - order now"}/>
         
     </div>
   )
