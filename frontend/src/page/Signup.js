@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import loginSignupImage from "../assest/login-animation.gif"
 import {BiShow , BiHide} from "react-icons/bi"
 import { Link, useNavigate } from 'react-router-dom';
-import { BsEmojiSmileUpsideDown } from 'react-icons/bs';
 import { ImagetoBase64 } from '../utility/imagetoBase64';
 import { toast } from 'react-hot-toast';
 
@@ -47,39 +46,48 @@ function Signup() {
       })
     }
  console.log(process.env.REACT_APP_SERVER_DOMAIN)
-    const handleSubmit = async(e) =>{
-      e.preventDefault()
-      const {firstName,email,password,confirmPassword,image} = data
-      if(firstName && email && password && confirmPassword && image){
-        if(password === confirmPassword){
-          const fetchData = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/signup`,{
-            method : "POST",
-            headers : {
-              "content-type" : "application/json"
-            },
-            body : JSON.stringify(data)
-          })
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      const { firstName, email, password, image, confirmPassword } = data;
 
-          const dataRes = await fetchData.json()
-         
-          toast(dataRes.message)
-          if(dataRes.alert){
-            navigate("/login");
+      if (firstName && email && password && image && confirmPassword) {
+        if (password === confirmPassword) {
+          const formData = {
+            firstName: firstName,
+            email: email,
+            password: password,
+            image: image,
+          };
+
+          try {
+            const fetchData = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/signup`, {
+              method: "POST",
+              headers: {
+                "content-type": "application/json",
+              },
+              body: JSON.stringify(formData),
+            });
+
+            const dataRes = await fetchData.json();
+
+            toast(dataRes.message);
+            if (dataRes.alert) {
+              navigate("/login");
+            }
+          } catch (error) {
+            console.log(error);
           }
+        } else {
+          alert("Password and confirm password do not match");
         }
-        else{
-          alert("password and confirm password does not match")
-        }
+      } else {
+        alert("Please enter required fields");
       }
-      else{
-        alert("Please Enter required fields")
-      }
-    }
+    };
 
   return (
     <div className='p-3 md:p-4'>
         <div className='w-full max-w-sm bg-white m-auto flex flex-col p-4'>
-          { /* <h1 className='text-center text-2xl font-bold '>Sign up</h1> */}
           <div className='w-20 h-20 overflow-hidden rounded-full drop-shadow-md shadow-md m-auto relative'>
             <img src={data.image? data.image :loginSignupImage} className='w-full h-full' alt=''/>
 

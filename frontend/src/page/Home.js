@@ -1,10 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef } from "react";
 import HomeCard from '../Component/HomeCard';
 import { useSelector } from 'react-redux';
 import CardFeature from '../Component/CardFeature';
 import {GrPrevious,GrNext} from "react-icons/gr";
-import {CiForkAndKnife} from "react-icons/ci"
-import FilterProduct from "../Component/FilterProduct";
 import AllProduct from "../Component/AllProduct";
 
 const Home = () => {
