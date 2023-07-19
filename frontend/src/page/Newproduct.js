@@ -66,7 +66,7 @@ const Newproduct = () => {
 
      
      else{
-      toast("Enter required fields")
+      toast("Enter the required fields")
      }
 
       

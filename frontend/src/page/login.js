@@ -60,7 +60,7 @@ const Login = () => {
         console.log(userData)
     }
     else{
-      alert("Please Enter required fields")
+      alert("Please enter the required fields")
     }
   }
 
@@ -100,7 +100,7 @@ const Login = () => {
           </button>
         </form>
         <p className='text-left text-sm mt-2'>
-          Do not have account ? {" "}
+          Don't have an account ? {" "}
           <Link to={"/signup"} className='text-red-500 underline'>Sign Up</Link>
         </p>
       </div>

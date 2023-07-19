@@ -78,10 +78,10 @@ function Signup() {
             console.log(error);
           }
         } else {
-          alert("Password and confirm password do not match");
+          alert("Both the passwords do not match");
         }
       } else {
-        alert("Please enter required fields");
+        alert("Please enter all required fields");
       }
     };
 
@@ -160,7 +160,7 @@ function Signup() {
             </button>
           </form>
           <p className='text-left text-sm mt-2'>
-            Already have account ? {" "}
+            Already have an account ? {" "}
             <Link to={"/login"} className='text-red-500 underline'>Login</Link>
           </p>
         </div>
