@@ -98,7 +98,7 @@ const Home = () => {
           </div>
         </div>
 
-        <AllProduct heading={"Shop smart, skip the lines - order now"}/>
+        <AllProduct heading={"Shop smart, skip the queue - order now"}/>
         
     </div>
   )
