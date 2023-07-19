@@ -49,8 +49,8 @@ function Signup() {
  console.log(process.env.REACT_APP_SERVER_DOMAIN)
     const handleSubmit = async(e) =>{
       e.preventDefault()
-      const {firstName,email,password,confirmPassword} = data
-      if(firstName && email && password && confirmPassword){
+      const {firstName,email,password,confirmPassword,image} = data
+      if(firstName && email && password && confirmPassword && image){
         if(password === confirmPassword){
           const fetchData = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/signup`,{
             method : "POST",
@@ -62,7 +62,6 @@ function Signup() {
 
           const dataRes = await fetchData.json()
          
-         // alert(dataRes.message);
           toast(dataRes.message)
           if(dataRes.alert){
             navigate("/login");
@@ -86,14 +85,14 @@ function Signup() {
 
             <label htmlFor='profileImage'>
               <div className='absolute bottom-0 h-1/3 bg-slate-500 bg-opacity-50 w-full text-center cursor-pointer'>
-                <p className='text-sm p-1 text-white'>Upload</p>
+                <p className='text-sm p-1 text-white'>Upload<span className='text-red-500'>*</span></p>
               </div>
               <input type={"file"} id='profileImage' accept='image/*' className='hidden' onChange={handleUploadProfileImage} />
             </label>
           </div>
 
           <form className='w-full py-3 flex flex-col' onSubmit={handleSubmit}>
-            <label htmlFor='firstName'>First Name</label>
+            <label htmlFor='firstName'>First Name<span className='text-red-500'>*</span></label>
             <input 
               type={"text"} 
               id='firstName' 
@@ -111,7 +110,7 @@ function Signup() {
               value={data.lastName}
               onChange={handleOnChange} />
 
-            <label htmlFor='email'>Email</label>
+            <label htmlFor='email'>Email<span className='text-red-500'>*</span></label>
             <input 
               type={"email"} 
               id="email" 
@@ -120,7 +119,7 @@ function Signup() {
               value={data.email}
               onChange={handleOnChange} />
 
-            <label htmlFor='password'>Password</label>
+            <label htmlFor='password'>Password<span className='text-red-500'>*</span></label>
             <div className='flex px-2 py-1 bg-slate-200 rounded mt-1 mb-2 focus-within:outline focus-within:outline-blue-300'>
               <input 
                 type={ showPassword? "text" : "password"} 
@@ -134,7 +133,7 @@ function Signup() {
               </span>
             </div>
 
-            <label htmlFor='confirmpassword'>Confirm Password</label>
+            <label htmlFor='confirmpassword'>Confirm Password<span className='text-red-500'>*</span></label>
             <div className='flex px-2 py-1 bg-slate-200 rounded mt-1 mb-2 focus-within:outline focus-within:outline-blue-300'>
               <input 
                 type={ showConfirmPassword? "text" : "password"} 
