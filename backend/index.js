@@ -7,8 +7,8 @@ const bcrypt = require('bcrypt');
 
 const app = express()
 app.use(cors({
-    origin: "*"
-  }));
+  origin: 'https://freshcart-peach.vercel.app'
+}));
 app.use(express.json({limit : "10mb"}))
 
 const PORT = process.env.PORT || 8080
